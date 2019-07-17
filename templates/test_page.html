@@ -1,0 +1,457 @@
+{% load static %}
+<html>
+<head>
+	<title>Workflow</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $('.col.opener').click(function() {	
+	  	if ($(this).width() == 20){
+	   		$('.col.left').css('width', '30%');
+	   		$('.col.viewer').css('width', 'calc(100% - 10px - 19% - 30%)');
+	   		$('.col.opener').css('width', '0%');
+	   	}
+		});
+
+		 $.ajax({
+				url: '/DP',
+		        dataType: 'json',
+		        success: function (data) {
+		        	$('.navbar').append('<div class=alignright><div class="gola" id="acc" ><img width="50" src='+data.data+'"></div></div>')///><img style="object-fit: contain "src='+data.data+'"></div></div>' style="background-image: url('+'"'	+data.data+'")
+		        	$('#acc').on('click',function(){
+		        		if($('.account').css('display')=='none'){
+
+	  					$('.account').css('display','block')
+	  					}
+	  					else{
+	  						$('.account').css('display','none')
+	  					}
+	  				});
+		        }
+		    });
+		$('.snippet').css('width',$('.mkabaap').width()-60);
+				$.ajax({
+				url: '/fetchLabels',
+		        dataType: 'json',
+		        success: function (data) {
+		          	if (data.verified) {	
+		            x = data.categories
+		            totol1 = data.total1
+		      		unread1 = data.unread1
+		            totol2 = data.total2
+		      		unread2 = data.unread2
+		            a = data.a
+					var i;					
+					$("<h3><div class='move-left-8'>Categories</div></h3>").insertBefore("id");
+					
+					for (i = 0; i < x.length; i++){
+						var num = (unread1[i]*100)/totol1[i];
+						var n = num.toString();
+						$( "<div class='list_coll'  id = '"+a[i]+"''><div class='dis_inline_block'><div class='golap'></div></div><div class='dis_inline_block'>"+x[i]+"</div><div class='alignright'>"+unread1[i]+"</div></div>" ).insertBefore("id");
+						/// style='background: linear-gradient(90deg, #B2DCF7 "+ n+"%,#F6F6F6 "+n+"%);
+					}	
+					x = data.labels
+					$("<h3><div class='move-left-8'>Labels</div></h3>").insertBefore("id");
+					a = data.b
+					for (i = 0; i < x.length; i++){
+						var num = (unread2[i]*100)/totol2[i];
+						var n = num.toString();
+						$( "<div class='list_coll'  id = '"+a[i]+"' '><div class='dis_inline_block'><div class='golap'></div></div><div class='dis_inline_block'>"+x[i]+"</div><div class='alignright'>"+unread2[i]+"</div></div>" ).insertBefore("id");
+						///style='background: linear-gradient(90deg, #B2DCF7 "+ n+"% ,#F6F6F6 "+n+"% );
+					}
+
+					$(".list_coll").on('click',function() {
+						 $('.col.left').css('width', '30%');
+
+							   //alert($(this).text());
+							    $('.col.left').html('<div class="space"></div><div class="inbox"></div><idi></idi>');
+							    $('.inbox').html($(this).find('.dis_inline_block').text().toUpperCase());	
+							    $.ajax({
+							        url: '/fetchMail',
+							        dataType: 'json',
+							        data: {
+							        	'fora': 'yes',
+							        	'label': $(this).attr('id')
+							        },
+							        success: function (data) {
+							          if (data.verified) { 
+							          	chara = []
+							            sender = data.sender
+							            subject = data.subject
+							            id = data.id
+							            read = data.read
+										var i;
+										
+										for (i = 0; i < sender.length; i++){ 
+										if(sender[i].split('"').length>1){
+						        			chara[i] = sender[i].split('"')[1].charAt(0).toUpperCase()
+						        		}
+						        		else{
+						        			chara[i]=sender[i].charAt(0).charAt(0).toUpperCase()
+						        		}
+						        		p = '300'
+						        		if(read[i]){
+						        			p='400'
+						        		}
+										$('<div class="mkabaap" id='+id[i]+' style="font-weight:'+p+';"><div class="mail-list profile"><div class="gola">'+chara[i]+'</div></div><div class="mail-list info"><div class="info-title">'+sender[i]+'</div><div class="snippet">'+subject[i]+'</div></div></div>' ).insertBefore("idi");
+										}
+										$('.column.left').css('box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);')
+										$('.mkabaap').on('click', function(){
+											$('.col.viewer').css('width', 'calc(100% - 10px - 19%)');
+											$('.col.left').css('width', '0%');
+											$('.col.opener').css('width', '20px');
+											$('.icons').css('width', '40px');
+											$('.icons').attr('id',$(this).attr('id'));
+											$('.icons').css('height', '40px');
+											    $('.mkabaap').removeClass('selected');
+											    $(this).addClass('selected');
+											   // alert($(this).attr('id'));
+											    $('.within').html('<h2></h2><op></op><iframe id="message-iframe"></iframe>');
+											    $.ajax({
+												        url: '/fetchContent',
+												        dataType: 'json',
+												        data: {
+												        	'ida': $(this).attr('id')
+												        },
+												        success: function (data) {
+												        	text= data.text
+												        	$('<h2>'+getHeader(text.payload.headers,'Subject')+'</h2>\
+												        		<div class="info_con">\
+												        		<div class="mail-list profile">\
+													<div class="gola">\
+																	'+getHeader(text.payload.headers,'From').charAt(0)+'\
+																</div>\
+													\
+															</div>\
+														<div class="mail-l info">\
+																<div class="info-title">\
+																	'+getHeader(text.payload.headers,'From')+'\
+																</div>\
+																<div class="snippet">\
+																	'+getHeader(text.payload.headers,'Date')+'\
+																</div>\
+															</div>\
+														</div>').insertBefore('op');
+												        	
+												        	var x = getBody(text.payload);
+												        	//alert(x);
+												        	var dstFrame = document.getElementById('message-iframe');
+															var dstDoc = dstFrame.contentDocument || dstFrame.contentWindow.document;
+															dstDoc.write(x);
+															dstDoc.close()
+												        	//var myFrame = $("#message-iframe").contents().find('body')
+  															//myFrame.html(x);
+												    /*    	var val = data.text.replace("-", "+");
+												        	var val1 = val.replace("_", "/");
+												        	alert($.base64.decode(val1));
+												        	
+												        	alert(data.text);
+												        	arr = data.test.split("\n")
+												        	for(x=0;x<arr.length;x++){
+												        	alert($.base64.decode(arr[x]));
+*/
+												        	}
+												        	
+														
+												});	
+											});	
+							          }
+
+							        } 
+									
+							      });
+					});
+	          	}
+	      	}
+	      	
+
+          });
+				 function getHeader(headers, index) {
+			        var header = '';
+			        $.each(headers, function(){
+			          if(this.name === index){
+			            header = this.value;
+			          }
+			        });
+			        return header;
+
+			      }
+				function getBody(message) {
+			        var encodedBody = '';
+			        if(typeof message.parts === 'undefined')
+			        {
+			          encodedBody = message.body.data;
+			        }
+			        else
+			        {
+			          encodedBody = getHTMLPart(message.parts);
+			        }
+			        encodedBody = encodedBody.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, '');
+			        return decodeURIComponent(escape(window.atob(encodedBody)));
+			      }
+			      function getHTMLPart(arr) {
+			        for(var x = 0; x <= arr.length; x++)
+			        {
+			          if(typeof arr[x].parts === 'undefined')
+			          {
+			            if(arr[x].mimeType === 'text/html')
+			            {
+			              return arr[x].body.data;
+			            }
+			          }
+			          else
+			          {
+			            return getHTMLPart(arr[x].parts);
+			          }
+			        }
+			        return '';
+			    }
+
+		 });
+		// $('.list_coll').click(DoSomeStuff());
+		///$(".list_coll").click(function() {
+		///		    alert($(this).attr('id'));
+			//});
+      	
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	$('.iconia'	).on('click',function(){
+		alert('KACHRE KA DABBA')
+		  $.ajax({
+			url: '/Trash',
+			dataType: 'json',
+			data: {
+			'id':$(this).attr('id')
+			},
+			success: function (data){
+				console.log('KOL')
+			}
+		});
+	});
+	$('.iconib'	).on('click',function(){
+		alert('READ')
+		  $.ajax({
+			url: '/MUNREAD',
+			dataType: 'json',
+			data: {
+			'id':$(this).attr('id')
+			},
+			success: function (data){
+				console.log('KOL')
+			}
+		});
+	});
+	$('.iconic'	).on('click',function(){
+		alert('STARRED')
+		  $.ajax({
+			url: '/STARRED',
+			dataType: 'json',
+			data: {
+			'id':$(this).attr('id')
+			},
+			success: function (data){
+				console.log('KOL')
+			}
+		});
+	});
+	$('.Cancel2').click(function(){
+				$('.pop-up2').css('display','none')
+	});
+	$('.mtop').on('keyup keypress', function(e) {
+			  var keyCode = e.keyCode || e.which;
+			  if (keyCode === 13) {
+
+			    e.preventDefault();
+			  }
+			  $(".pop-up2").css('display','block')
+			    $.ajax ({
+					url: '/Search',
+					dataType: 'json',
+					data: {
+						'parameter': $("#asearch").val()
+					},
+			    success: function (data) {
+			    	$('#search_ans').html('')
+			    	for(i=0;i<data.text.length;i++){
+			    		$('#search_ans').append('<div class="dabba">\
+								'+data.text[i].replace('<','&#60;').replace('>','&#62;')+'<br>\
+								'+data.snippet[i]+'\
+			    		</div>\
+			    		')
+			    	console.log(data)
+			    }
+			    }
+			});	
+		});
+});
+</script>
+	<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+	<link rel="stylesheet" href="{% static 'css/mail_list.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet"> 
+</head>
+<body>
+	<div class="pop-up2">
+		<div class="Cancel2" style="background-image: url('{% static "close.png"%}')"></div>
+
+		<div id='search_ans' class="scroller">
+
+		</div>	
+
+	</div>
+	<div class="navbar">
+		<CENTER class='se'>
+			<div class="search">
+				<img class="dis-block pop" src='/static/magnifineglass-01.png' height='40px'>
+				<form id='formid' class="dis-block mtop">
+					<input type="text" name="search" id='asearch' class="fuller dis_inline_block" placeholder='Search Mail'>
+				</form>
+			</div>
+		</CENTER>
+		<div class="logoa">
+				<img src='/static/logo.png' style="border-radius: 0" height='40px'>IEN
+		</div>
+	</div>
+	<div class="account">
+		<a href="https://myaccount.google.com/"><button class="privacy">PRIVACY</button></a>
+		<a href="/logout"><button class="privacy">LOGOUT</button></a>
+	</div>
+	<div class="col sleft">
+		<div class='space'></div>
+		<h2><div class="move-left-8">Mails</div></h2>
+		<!--
+		<div class="list_coll">
+			<div class="dis_inline_block">
+				<div class="golap">
+					
+				</div>
+			</div>
+			<div class="dis_inline_block">
+				All Mail
+			</div>
+		</div>
+		-->
+		<id></id>
+		
+	</div>
+	<div class="col left">
+		<div class='space'></div>
+	<div class="inbox">
+	Label
+</div>
+
+	<!--<div class="mkabaap">
+	<div class="mail-list profile">
+		<div class="gola">
+			D
+		</div>
+
+	</div>
+	<div class="mail-list info">
+		<div class="info-title">
+		Discord
+		</div>	
+		<div class="snippet">
+			
+		</div>
+	</div>
+	</div>
+		<div class="mkabaap">
+
+		<div class="mail-list profile">
+			<div class="gola">
+				D
+			</div>
+
+		</div>
+		<div class="mail-list info">
+			<div class="info-title">
+				Discord
+			</div>
+			<div class="snippet">
+				Verify Discord Login From New Location
+
+			</div>
+		</div>
+	</div>-->
+	<idi></idi>
+
+</div>
+<div class="col opener">
+
+</div>
+<div class="col viewer">
+	<div class='space'></div>
+	<div class="content">
+  <div class="alignright inline">
+  	<div class="icons iconia">
+  		
+  	</div>
+  	<div class="icons iconib">
+  		
+  	</div>
+  	<div class="icons iconic">
+  		
+  	</div>
+  </div>
+	<div style="clear: both;"></div>
+	<div class="within">
+		
+	
+		<!--
+			<div class="info_con">
+	<div class="mail-list profile">
+			<div class="gola" style="background-color: #F6F6F6">
+				D
+			</div>
+
+		</div>
+	<div class="mail-l info">
+			<div class="info-title">
+				Discord &lt; no-reply@discord.com &gt;
+			</div>
+			<div class="snippet">
+				30 Feb 2019, 11:60PM
+			</div>
+		</div>
+	</div>
+-->
+	<op></op>
+
+	<div class="snippet"></div>
+	<iframe id='message-iframe'>
+			
+	</iframe>
+	<!--
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+
+		<div class="snippet"></div>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+	
+		<div class="snippet"></div>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	</div>
+-->
+</div>
+</div>
+
+</div>
+</body>
+</html>

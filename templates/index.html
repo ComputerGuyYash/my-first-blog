@@ -1,0 +1,709 @@
+{% load static %}
+<html>
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+	<title>Widgets</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".type_add").click(function(){
+				alert($(this).attr('id'))
+				///SEND RESPONSE TO THE SERVER
+				// AFETR AJAX ADD THE FIELD
+				
+				$('.labelers').append('<div class="mails-loop" id="'+$(this).attr('id')+'">\
+					'+$(this).attr('id')+'<div class="card-list"></div></div>')
+			});
+			$(".type").click(function(){
+				alert($(this).attr('id'))
+				$(this).parent().parent().parent().attr("id",$(this).attr('id'));
+				$(this).parent().parent().parent().children('yes').text($(this).attr('id'));
+				///SEND RESPONSE TO THE SERVER
+				// AFETR AJAX SYNC()
+			});
+				$(".list_coll").click(function() {
+					$('.col.superleft').css('width', '0%');
+						 $('.col.left').css('width', '100%');
+						 $('.col.viewer').css('width', '0%');
+						 $('.col.opener').css('width', '0px');
+					});
+				$(".mkabaap").click(function() {
+					$('.col.superleft').css('width', '0%');
+					$('.col.left').css('width', '0%');
+					$('.col.viewer').css('width', '100%');
+					$('.col.opener').css('width', '10px');
+					$('.col.viewer').css('display', 'block');
+					});
+				$(".col.opener").click(function() {
+					$('.col.left').css('width', '100%');
+					$('.col.viewer').css('width', '0%');
+					});
+			// COMPOSER
+			$('.Cancel').click(function(){
+				$('.pop-up').css('display','none')
+			});
+			$('.compose-icon').click(function(){
+				$('.pop-up').css('display','block')
+			});
+			$('#Sender').click(function(){
+				alert($('#to').val())
+			});
+		var answer = '0'
+			/// GAME
+			
+			gamebody = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+ 			$('.game-body').html('<div class="title_1">\
+									Identify the Sender\
+								</div>'+gamebody)
+ 			choice = ['discord@gmail.com','com@gmail.com','rimp@gmail.com','discord@gmail.com']
+ 			for(i=0;i<choice.length;i++){
+ 				$('.game-choice').append('<div class="choice" id='+i+' >'+choice[i]+'</div>')
+ 			}
+ 			answer = '1'
+			$('.choice').click(function(){
+				if($(this).attr('id')==answer){
+					$('.choice').css('display','none')
+					$('.game-body').html('<p><img src="right.png" width="200"> Right Answer</p>')
+					alert("YOU ARE RIGHT")
+					$('.game-choice').css('width','200%')
+				}
+				else{
+					$('.choice').css('display','none')
+					alert("Answer is "+$('#'+answer).html())
+					$('.game-body').html('<p><img src="wrong.jpg" width="200"> Wrong Answer</p>')
+				}
+			});
+			///NOTIFICATIONS
+
+		$('.not-holder').each(function(index){
+			mail=['discord@gmail.com','com@gmail.com','rimp@gmail.com','discord@gmail.com','com@gmail.com','rimp@gmail.com']
+			count=['10','2','10+','10+','10','2']
+			for (var i = 0;i < mail.length; i++) {
+				$(this).children('.not-box').children('.not-box-icons').append('<div class="not-icon">\
+					<span class="tooltiptext">'+mail[i]+'</span>\
+					<div class="sub">'+count[i]+'</div>\
+					H\
+				</div>\
+				')
+			}
+		});
+
+			/// CALENDER
+			summary = ['Finalist Announcement: Code to Learn 2017']
+			startDate = ['2017-11-15']
+			endDate = ['2017-11-16']
+			for (var i = 0;i < summary.length; i++) {
+					$('.loop').children('.card-list').append(
+						'<div class="cal-box" onclick="window.open("https://www.google.com/calendar/event?eid=NnE2bTNhZmtjMG9xcjVmMzRtNTEyZzlvdDQgY29tcHV0ZXIuZ3V5YnVpbGRlckBt","myWindow");" style="cursor: pointer;">\
+							<div class="inliner">\
+							<div class="cgola">\
+									'+summary[i].charAt(0)+'\
+							</div>\
+							<div class="cal-id">\
+								'+summary[i]+'\
+								 <div class="cal-content">\
+							Start Date:-'+startDate[i]+'<br>\
+								End Date:- '+endDate[i]+'\
+						</div>\
+							</div>\
+						</div>\
+							\
+						</div>')
+				}
+			/// MAILS
+			$('.mails-loop').each(function(index){
+				if($(this).attr('id')=='INBOX'){
+				mail = ['discord@gmail.com','com@gmail.com','rimp@gmail.com','discord@gmail.com','com@gmail.com','rimp@gmail.com']
+				date = ['12/13/12','1/1/1','2/2/2','12/13/12','1/1/1','2/2/2']
+				snipet = ['Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor']
+				for (var i = 0;i < mail.length; i++) {
+					$(this).children('.card-list').append('\
+						<div class="mail-box">\
+							<div class="inliner">\
+							<div class="gola">\
+									'+mail[i].charAt(0).toUpperCase()+'\
+							</div>\
+							<div class="mail-id">\
+								'+mail[i]+'\
+								<br>\
+								'+date[i]+'\
+							</div>\
+						</div>\
+							<div class="mail-content">\
+							'+snipet[i]+'\
+						</div>\
+						</div>\
+					')
+				}
+			}
+			else{
+				mail = ['d@gmail.com','c@gmail.com','rp@gmail.com','diord@gmail.com','co@gmail.com','rim@gmail.com']
+				date = ['12/13/12','1/1/1','2/2/2','12/13/12','1/1/1','2/2/2']
+				snipet = ['Lorem ipcididunt ut labor','Lorem ipsum ddolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor','Lorem ipsum dolo sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididnt ut labor','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+							tempor incididunt ut labor']
+				for (var i = 0;i < mail.length; i++) {
+					$(this).children('.card-list').append('\
+						<div class="mail-box">\
+							<div class="inliner">\
+							<div class="gola">\
+									'+mail[i].charAt(0).toUpperCase()+'\
+							</div>\
+							<div class="mail-id">\
+								'+mail[i]+'\
+								<br>\
+								'+date[i]+'\
+							</div>\
+						</div>\
+							<div class="mail-content">\
+							'+snipet[i]+'\
+						</div>\
+						</div>\
+					')
+				}
+			}
+			$(this).children(".inliner").children(".gola").text("A");
+			});
+			/*$.ajax({
+				url: '/GetFrom',
+		        dataType: 'json',
+		        data: {
+		        	'a': $(this).attr('id')
+		        },
+		        success: function (data) {
+		          if (data.verified) {
+		            mail = data.mail
+					var i;
+					for (i = 0; i < x.length; i++){ 
+					}
+          		}
+          		}		
+        	});
+			});
+			*/
+		
+			/*
+			$.ajax({
+					url: 'http://127.0.0.1:8080/Test',
+			        dataType: 'json',
+			        data: {
+			        	'parameter': 'noreply@notifications.freelancer.com'
+			        },
+			        success: function (data) {
+			          if (data.verified) {
+			            alert(data.count)
+			         		
+	        	}
+	        }
+	    });*/
+	});
+	</script>
+</head>
+<body>
+	<div class="compose-icon">
+	</div>
+	<div class="pop-up">
+		<div class="Cancel"></div>
+		<form>
+			To:
+			<input type="text" name="To" id="to">
+			<br>
+			Subject:
+			<input type="text" name="Subject" id="sub">
+			<br>
+			Body:
+			<br>
+			<textarea width="100%" id="body"></textarea>
+		</form>
+		<button id='Sender'>SEND</button>
+		
+	</div>
+	<div class='topbar'>
+		<CENTER>
+			<div class="search">
+				Search
+			</div>
+		</CENTER>
+	</div>
+	<div class="slide">
+	</div>
+	<div class="mails-loop" id='INBOX'>
+		INBOX
+		<br>
+		
+		<div class='card-list'>
+<!--
+		<div class="mail-box">
+			<div class="inliner">
+			<div class="gola">
+					D
+			</div>
+			<div class="mail-id">
+				discord@support.com
+				<br>
+				12/12/13
+				 
+			</div>
+		</div>
+			<div class="mail-content">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labor
+		</div>
+		</div>
+	-->
+	</div>
+</div>
+	</div>
+	<div class="log"></div>
+	<br>
+	<br>
+	<div class="loop">
+		DON'T FORGET THESE
+		<div class="card-list">
+<!--
+		<div class="cal-box" onclick="window.open('https://www.google.com/calendar/event?eid=NnE2bTNhZmtjMG9xcjVmMzRtNTEyZzlvdDQgY29tcHV0ZXIuZ3V5YnVpbGRlckBt');" style="cursor: pointer;">
+			<div class="inliner">
+			<div class="cgola">
+					F
+			</div>
+			<div class="cal-id">
+				Finalist Announcement: Code to Learn 2017
+				
+				 <div class="cal-content">
+			Start Date:- 2017-11-15
+				End Date:- 2017-11-16
+		</div>
+			</div>
+		</div>
+				
+		</div>
+	-->
+		</div>
+	</div>
+
+	<div class="not">
+	NOTIFICATIONS
+	<div class="not-holder">
+	<div class='not-box'>
+		<div class='title_1'>SOCIAL</div>
+			<div class='not-box-icons'>
+		<!--<div class="not-icon">
+			<span class="tooltiptext">computer.guybuilder@gmail.com</span>
+			<div class="sub">1</div>
+			
+			H
+
+		</div>
+		-->
+	</div>
+	</div>
+	<div class='not-box'>
+	
+	</div>
+
+</div>
+</div>
+<div class="log"></div>
+BORED? LETS PLAY A GAME
+<div class="game">
+	
+	<br>
+		<div class="game-content">
+			<div class="game-body">
+				<div class="title_1">
+				Identify the Sender
+			</div>
+			<!--
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			-->
+			</div>
+			<div class="game-choice">
+				<!--<div class="choice" id='1'>
+					email@email.com
+				</div>
+				<div class="choice" id='2'>
+					email@email.com
+				</div>
+				<div class="choice" id='3'>
+					email@email.com
+				</div>
+				<div class="choice" id='4'>
+					email@email.com
+				</div>
+			-->
+			</div>
+	</div>
+
+</div>
+MULTITASKING OVERSIMPLIFIED
+<div class='mail'>
+<div class="col superleft">
+		<div class='space'></div>
+		<h2><div class="move-left-8">Mails</div></h2>
+		
+		<div class="list_coll">
+			<div class="dis_inline_block">
+				<div class="golap">
+					
+				</div>
+			</div>
+			<div class="dis_inline_block">
+				All Mail
+			</div>
+		</div>
+		
+		<id></id>
+		
+	</div>
+	
+	<div class="col left">
+		<div class='space'></div>
+	<div class="inbox">
+	Label
+</div>
+
+	<div class="mkabaap">
+	<div class="mail-list profile">
+		<div class="gola">
+			D
+		</div>
+
+	</div>
+	<div class="mail-list info">
+		<div class="info-title">
+		Discord
+		</div>	
+		<div class="snippet">
+			
+		</div>
+	</div>
+	</div>
+		<div class="mkabaap">
+
+		<div class="mail-list profile">
+			<div class="gola">
+				D
+			</div>
+
+		</div>
+		<div class="mail-list info">
+			<div class="info-title">
+				Discord
+			</div>
+			<div class="snippet">
+				Verify Discord Login From New Location
+
+			</div>
+		</div>
+	</div>
+	<idi></idi>
+</div>
+
+
+
+<div class="col opener">
+
+</div>
+<div class="col viewer">
+	<div class='space'></div>
+	<div class="content">
+  <div class="alignleft">
+  	<div class="icons">
+
+  	</div>
+  </div>
+  <div class="alignright inline">
+  	<div class="icons">
+  		
+  	</div>
+  	<div class="icons">
+  		
+  	</div>
+  	<div class="icons">
+  		
+  	</div>
+  </div>
+	<div style="clear: both;"></div>
+	<div class="within" >
+		
+	
+		
+			<div class="info_con">
+				<div class="log"></div>
+	<div class="mail-list profile">
+			<div class="gola" >
+				D
+			</div>
+
+		</div>
+	<div class="mail-l info" style="width: 100%">
+			<div class="info-title" style="width: 100%">
+				Discord
+			</div>
+			<div class="snippet">
+				30 Feb 2019, 11:60PM
+			</div>
+		</div>
+	</div>
+
+	<op></op>
+<p>
+	<!--
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+	
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	-->
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div class="col superleft">
+		<div class='space'></div>
+		<h2><div class="move-left-8">Mails</div></h2>
+		
+		<div class="list_coll">
+			<div class="dis_inline_block">
+				<div class="golap">
+					
+				</div>
+			</div>
+			<div class="dis_inline_block">
+				All Mail
+			</div>
+		</div>
+		
+		<id></id>
+		
+	</div>
+	
+	<div class="col left">
+		<div class='space'></div>
+	<div class="inbox">
+	Label
+</div>
+
+	<div class="mkabaap">
+	<div class="mail-list profile">
+		<div class="gola">
+			D
+		</div>
+
+	</div>
+	<div class="mail-list info">
+		<div class="info-title">
+		Discord
+		</div>	
+		<div class="snippet">
+			
+		</div>
+	</div>
+	</div>
+		<div class="mkabaap">
+
+		<div class="mail-list profile">
+			<div class="gola">
+				D
+			</div>
+
+		</div>
+		<div class="mail-list info">
+			<div class="info-title">
+				Discord
+			</div>
+			<div class="snippet">
+				Verify Discord Login From New Location
+
+			</div>
+		</div>
+	</div>
+	<idi></idi>
+</div>
+
+
+
+<div class="col opener">
+
+</div>
+<div class="col viewer">
+	<div class='space'></div>
+	<div class="content">
+  <div class="alignleft">
+  	<div class="icons">
+
+  	</div>
+  </div>
+  <div class="alignright inline">
+  	<div class="icons">
+  		
+  	</div>
+  	<div class="icons">
+  		
+  	</div>
+  	<div class="icons">
+  		
+  	</div>
+  </div>
+	<div style="clear: both;"></div>
+	<div class="within" >
+		
+	
+		
+			<div class="info_con">
+	<div class="mail-list profile">
+			<div class="gola" >
+				D
+			</div>
+
+		</div>
+	<div class="mail-l info" style="width: 100%">
+			<div class="info-title" style="width: 100%">
+				Discord
+			</div>
+			<div class="snippet">
+				30 Feb 2019, 11:60PM
+			</div>
+		</div>
+	</div>
+
+	<op></op>
+<p>
+	<!--
+	<div class="snippet"></div>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+
+		<div class="snippet"></div>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	
+	
+		<div class="snippet"></div>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	-->
+</p>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<div class="mails-loop" id='SENTA'>
+	<yes>		INBOX </yes>
+		<div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+  	<div class="type" id='SENT'>
+  		Hello
+  	</div>
+  	<div class="type" id='SENT'>
+  		Hello
+  	</div>
+  </div>
+</div>
+<div class="alignright">
+	Add Label here
+
+	<div class="dropdown">
+  <button class="dropbtn"><img src='plus.png' width="30">Dropdown</button>
+  <div class="dropdown-content">
+  	<div class="type_add" id='UNREAD'>
+  		UN
+  	</div>
+  	<div class="type_add" id='DISTINGUISGED'>
+  		LO
+  	</div>
+  </div>
+</div>
+	
+</div>
+
+<div class="log">
+</div>
+		<br>
+	
+		<div class='card-list'>
+<!--
+		<div class="mail-box">
+			<div class="inliner">
+			<div class="gola">
+					D
+			</div>
+			<div class="mail-id">
+				discord@support.com
+				<br>
+				12/12/13
+				 
+			</div>
+		</div>
+			<div class="mail-content">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labor
+		</div>
+		</div>
+	-->
+	</div>
+
+</div>
+<div class = 'labelers'></div>
+</body>
+<!--
+	<div class="multi-tab">
+		<div class="tab">
+			H
+		</div>
+		<div class="tab">
+			H
+		</div>
+	</div>
+-->
+</html>  	

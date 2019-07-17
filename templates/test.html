@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+	 $.ajax({
+        url: '/fetchMail',
+        dataType: 'json',
+        success: function (data) {
+          if (data.verified) {
+            var link = document.getElementById("load");
+			link.style.display = 'none'; 
+            x = data.mail_list
+			var i;
+			for (i = 0; i < x.length; i++){ 
+			$( "<p>"+x[i]+"</p>" ).insertAfter("id");
+/*			
+			var para = document.createElement("p");
+			var node = document.createTextNode(x[i]);
+			para.appendChild(node);
+
+			var element = document.getElementById("div1");
+			var child = document.getElementById("lo");
+			element.insertBefore(para,child);
+*/
+			}
+			///$( "<p>Test</p>" ).insertAfter("id");
+          }
+        } 
+		
+      });
+	 });
+</script>
+<body>
+	<button>Hello</button>
+	<!--<img src="{% static "my_app/example.jpg" %}" alt="My image"> -->
+	<img id ="load" src="{% static "loading.gif" %}">
+	<div id="div1">
+	<id = lo></id>
+	<div1></div1>
+</div>
+</body>
+</html>

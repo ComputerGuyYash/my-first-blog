@@ -1,0 +1,76 @@
+.pin{
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	height: 30%;
+	width: 300px;
+	overflow-y: scroll;
+}
+.add{
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	height: 30%;
+	width: 300px;
+	overflow-y: scroll;
+}
+.popup{
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: calc(70% - 500px);
+  /* bring your own prefixes */
+  padding: 10px;
+  width: 500px;
+  height: 180px;
+  background: #FFF;
+  z-index: 20;
+}
+.popup.display_b{
+	display: block;
+}
+#popup2:after {
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: -2;
+}
+
+#popup2:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #FFF;
+  z-index: -1;
+}
+.con{
+  display: none;
+}
+.con.selected{
+  display: block;
+}
+.hor{
+	display: inline-flex;
+	align-items: center;
+}
+.canvas{
+	display: flex;
+	flex-flow: row wrap;
+	align-content: space-between;
+	height: 100%;
+	width: 100%;
+	justify-content: space-evenly;
+}
+textarea{
+   resize: none; 
+
+white-space: nowrap;
+
+}

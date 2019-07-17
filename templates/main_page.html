@@ -1,0 +1,98 @@
+{% load static %}
+<html>
+<head>
+	<title>Workflow</title>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+				$.ajax({
+				url: '/fetchLabels',
+		        dataType: 'json',
+		        success: function (data) {
+		          	if (data.verified) {	
+		            x = data.categories
+		            totol1 = data.total1
+		      		unread1 = data.unread1
+		            totol2 = data.total2
+		      		unread2 = data.unread2
+		            a = data.a
+					var i;					$("<h3><div class='move-left-8'>Categories</div></h3>").insertBefore("id");
+					
+					for (i = 0; i < x.length; i++){
+						var num = (unread1[i]*100)/totol1[i];
+						var n = num.toString();
+						$( "<div class='list_coll'  id = '"+a[i]+"' style='background: linear-gradient(90deg, #B2DCF7 "+ n+"%,#F6F6F6 "+n+"%);'><div class='dis_inline_block'><div class='gola'></div></div><div class='dis_inline_block'>"+x[i]+"</div></div>" ).insertBefore("id");
+						
+					}
+					x = data.labels
+					$("<h3><div class='move-left-8'>Labels</div></h3>").insertBefore("id");
+					a = data.b
+					for (i = 0; i < x.length; i++){
+						var num = (unread1[i]*100)/totol1[i];
+						var n = num.toString();
+						$( "<div class='list_coll'  id = '"+a[i]+"' style='background: linear-gradient(90deg, #B2DCF7 "+ n+"% ,#F6F6F6 "+n+"% );'><div class='dis_inline_block'><div class='gola'></div></div><div class='dis_inline_block'>"+x[i]+"</div></div>" ).insertBefore("id");
+						
+					}
+
+					$(".list_coll").click(function() {
+							    alert($(this).attr('id'));
+							    $.ajax({
+							        url: '/fetchMail',
+							        dataType: 'json',
+							        data: {
+							        	'label': $(this).attr('id')
+							        },
+							        success: function (data) {
+							          if (data.verified) { 
+							            x = data.mail_list
+										var i;
+										for (i = 0; i < x.length; i++){ 
+										$( "<p>"+x[i]+"</p>" ).insertBefore("idi");
+										}
+							          }
+							        } 
+									
+							      });
+					});
+	          	}
+	      	}
+
+          });
+		 });
+		// $('.list_coll').click(DoSomeStuff());
+		///$(".list_coll").click(function() {
+		///		    alert($(this).attr('id'));
+			//});
+      	
+</script>
+	<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet"> 
+</head>
+<body>
+	<div class="navbar">
+		<div class="menu logo">
+			Lien
+		</div>
+	</div>
+	<div class="column left">
+		<h2><div class="move-left-8">Mails</div></h2>
+		<!--
+		<div class="list_coll">
+			<div class="dis_inline_block">
+				<div class="gola">
+					
+				</div>
+			</div>
+			<div class="dis_inline_block">
+				All Mail
+			</div>
+		</div>
+		-->
+		<id></id>
+		
+	</div>
+	<div class="column middle">
+				<idi></idi>	</div>
+</body>
+</html>

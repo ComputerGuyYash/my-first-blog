@@ -1,0 +1,278 @@
+{% load static %}
+<html>
+<head>
+	<title>Widger</title>
+	<link rel="stylesheet" href="{% static 'css/widget1.css' %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".add").click(function(){
+		      $('#popup2').addClass('display_b');
+		    });
+		    $("#can").click(function(){
+		      $('#popup2').removeClass('display_b');
+		      alert('prs');
+		    });
+		    $(".open").click(function(){
+		      $('.con').removeClass('selected');
+		      $('#con'+$(this).attr('id')).addClass('selected');
+		    });
+		    
+		
+
+		    	$.ajax({
+				url: '/GetWidgets',
+		        dataType: 'json',
+		        success: function (data) {
+		          if (data.verified) {
+		            alert('Got');
+		            x = data.wids
+		            y = data.remarks
+		            $('.canvas').html('')
+		            for (var i = 0; i < x.length; i++) {
+		            	if(x[i]=='P'){
+		    				$('.canvas').append('<div class="pin" id="'+y[i]+'">\
+													<div class="title">\
+														Pinned\
+													</div>\
+													<ul id=ulp'+y[i]+'>\
+													</ul>')
+							            	}
+
+		            
+		            if(x[i]=='N'){
+		    				$('.canvas').append('\
+												<div class="not" id="'+y[i]+'">\
+												<div class="title">\
+													Notifications\
+												</div>\
+												<ul id="uln'+y[i]+'">\
+												</ul>\
+											</div>')
+					}
+				}
+
+		            
+		            $('.canvas').append("\
+		            	<div class='add'>\
+						<div class='add_ic'>\
+							+\
+						</div>\
+						<div class='popup' id='popup2'>\
+							<div class='hor'>\
+						    <div class='open' id='1' >\
+						      Pin\
+						    </div>\
+						    <div class='open' id='2'>\
+						      Notifications\
+						    </div>\
+						    </div>\
+						    <div class='con' id='con1'>\
+							    <textarea rows='1' cols='50' id='pin_text'></textarea>\
+								<button id='send_pin'>Click</button>\
+						    </div>\
+						    <div class='con' id='con2'>\
+						      <textarea rows='1' cols='50' id='not_text'></textarea>\
+								<button id='send_not'>Click</button>\
+						    </div>\
+						    <button id='can'>\
+							    Cancel\
+							</button>\
+					</div>")
+					$("button[id='send_pin']").on('click',function(){
+				    	alert('hl');
+
+				    	alert($('#pin_text').val().replace(/([\n\r\t]+)/g, ''));
+				    	$.ajax({
+						url: '/AddWid',
+				        dataType: 'json',
+				        data: {
+				        	'type': 'P',
+				        	'parameter': $('#pin_text').val().replace(/([\n\r\t]+)/g, '')
+				        },
+				        success: function (data) {
+				          if (data.verified) {
+				            alert('Done');
+				            $('#popup2').removeClass('display_b');
+		          		}
+
+		          		}		
+        			});
+				    	});
+
+					$("button[id='send_not']").on('click',function(){
+				    	alert( $('#not_text').val())
+				    	$.ajax({
+						url: '/AddWid',
+				        dataType: 'json',
+				        data: {
+				        	'type': 'N',
+				        	'parameter': $('#not_text').val()
+				        },
+				        success: function (data) {
+				          if (data.verified) {
+				            alert('Done');
+				            $('#popup2').removeClass('display_b');
+		          		}
+
+		          		}		
+        			});
+				    	});
+					$("textarea").on('change',function(){
+						this.value=this.value.replace(/([\n\r\t]+)/g, '')
+					});	
+					$(".add").click(function(){
+					      $('#popup2').addClass('display_b');
+					    });
+					    $("#can").click(function(){
+					      $('#popup2').removeClass('display_b');
+					      alert('prs');
+					    });
+					    $(".open").click(function(){
+					      $('.con').removeClass('selected');
+					      $('#con'+$(this).attr('id')).addClass('selected');
+					    });
+		            sync()
+          		
+          		
+          		
+          }
+          else{
+          			$('.canvas').append('<div class="error">No Widgets Found</div>')
+          			$('.canvas').append("\
+		            	<div class='add'>\
+						<div class='add_ic'>\
+							+\
+						</div>\
+						<div class='popup' id='popup2'>\
+							<div class='hor'>\
+						    <div class='open' id='1' >\
+						      Pin\
+						    </div>\
+						    <div class='open' id='2'>\
+						      Notifications\
+						    </div>\
+						    </div>\
+						    <div class='con' id='con1'>\
+							    <textarea rows='1' cols='50' id='pin_text'></textarea>\
+								<button id='send_pin'>Click</button>\
+						    </div>\
+						    <div class='con' id='con2'>\
+						      <textarea rows='1' cols='50' id='not_text'></textarea>\
+								<button id='send_not'>Click</button>\
+						    </div>\
+						    <button id='can'>\
+							    Cancel\
+							</button>\
+					</div>")
+					$("textarea").on('change',function(){
+						this.value=this.value.replace(/([\n\r\t]+)/g, '')
+					});	
+					$(".add").click(function(){
+					      $('#popup2').addClass('display_b');
+					    });
+					    $("#can").click(function(){
+					      $('#popup2').removeClass('display_b');
+					      alert('prs');
+					    });
+					    $(".open").click(function(){
+					      $('.con').removeClass('selected');
+					      $('#con'+$(this).attr('id')).addClass('selected');
+					    });
+		            sync()
+          		}
+          	}
+		    });	
+		    });	
+		
+	</script>
+	<script type="text/javascript">
+		var sync = function(){
+			$('.pin').each(function(index){
+				thisa=$(this).attr('id')
+				alert(thisa)
+			$.ajax({
+				url: '/Search',
+		        dataType: 'json',
+		        data: {
+		        	'parameter': $(this).attr('id')
+		        },
+		        success: function (data) {
+		          if (data.verified) {
+		          	alert(thisa+'#')
+		            x = data.text
+		            y = data.snippet
+					for(i=0;i<x.length;i++){
+						$("ul[id='ulp"+thisa+"']").append("<li>"+x[i] + " " + y[i]+"</li>")
+					}
+          		}
+          		else{
+          			$("ul[id='ulp"+thisa+"']").append("<div class='error'>No Emails Found</div>")
+          		}
+          		}		
+        	});
+		});
+				$('.not').each(function(index){
+					thisa = $(this).attr('id')
+					alert(thisa);
+				$.ajax({
+					url: '/Test',
+			        dataType: 'json',
+			        data: {
+			        	'parameter': $(this).attr('id')
+			        },
+			        success: function (data) {
+			          if (data.verified) {
+			            o = data.count
+			            alert(o);
+			            alert(thisa);
+			            $("ul[id='uln"+thisa+"']").append("<li>"+o+"</li>")
+	          		}
+	          		else{
+	          			$("[id='uln"+thisa+"']").append("<div class='error'>No Emails Found</div>")
+	          		}
+	          		}		
+	        	});
+		});
+	}
+	</script>
+</head>
+<body>
+<div class="canvas">
+	<pq></pq>
+	<!--
+	<div class="not" id="notify@twitter.com">
+		<div class="title">
+			Notifications
+		</div>
+		<ul>
+		</ul>
+	</div>-->
+	<div class="add">
+		<div class="add_ic">
+			+
+		</div>
+		<div class="popup" id="popup2">
+			<div class="hor">
+		    <div class="open" id='1' >
+		      Pin
+		    </div>
+		    <div class="open" id='2'>
+		      OPEN1
+		    </div>
+		    </div>
+		    <div class='con' id='con1'>
+			    <textarea rows="1" cols="50" id='pin_text'></textarea>
+				<button id='send_pin'>Click</button>
+		    </div>
+		    <div class='con' id='con2'>
+		      
+		    </div>
+
+		    <button id="can">
+			    Cancel
+			</button>
+	</div>
+</div>
+</body>
+</html>

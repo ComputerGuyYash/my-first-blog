@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Compose</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#send').click(function () {
+			$.ajax({
+				url: '/Compose',
+		        dataType: 'json',
+		        data: {
+		        	'To': $('#sender').val(),
+		        	'Subject': $('#subject').val(),
+		        	'Body': $('#body').val(),
+		        },
+		        success: function (data) {
+		        	if(data.verified){
+		        		alert("Done");
+		        	}
+		        }
+			});
+		});
+	});
+	</script>
+</head>
+<body>
+	<form>
+		To:
+		<input type="text" name="sender" id="sender"><br>
+		Subject:
+		<input type="text" name="subject" id="subject"><br>
+		Body:
+		<input type="text" name="body" id="body"><br>
+		
+		<button id='send'>Send</button>
+	</form>
+
+</body>
+</html>
